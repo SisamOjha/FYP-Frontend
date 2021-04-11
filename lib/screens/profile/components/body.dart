@@ -31,6 +31,11 @@ class Body extends StatelessWidget {
             press: () {},
           ),
           ProfileMenu(
+            text: "Maps",
+            icon: "assets/icons/Settings.svg",
+            press: () {},
+          ),
+          ProfileMenu(
             text: "Help Center",
             icon: "assets/icons/Question mark.svg",
             press: () {},
@@ -38,7 +43,7 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Log Out",
             icon: "assets/icons/Log out.svg",
-            press: () async {
+             press: () async {
               Map data = {};
               var response = await Api().logOut(data, 'logout');
               var result = json.decode(response.body);
@@ -52,6 +57,7 @@ class Body extends StatelessWidget {
               }
               // print(result['code']);
             },
+            
           ),
         ],
       ),

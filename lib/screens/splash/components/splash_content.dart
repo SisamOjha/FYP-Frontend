@@ -20,7 +20,7 @@ class SplashContent extends StatelessWidget {
           "Doctor On Hand",
           style: TextStyle(
             fontSize: getProportionateScreenWidth(36),
-            color: kPrimaryColor,
+            color: kPrimaryLightColor,
             fontWeight: FontWeight.bold,
           ),
         ),

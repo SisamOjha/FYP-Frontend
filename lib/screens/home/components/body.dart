@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../../size_config.dart';
 import 'doctor.dart';
-import 'home_header.dart';
 import 'hospital.dart';
-import 'nearbyhospitals.dart';
+import 'home_header.dart';
+import 'package:DoctorOnHand/screens/home/components/section_title.dart';
+
 
 
 
@@ -14,19 +15,25 @@ class Body extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: getProportionateScreenHeight(20)),
+           SizedBox(height: getProportionateScreenHeight(20)),
             HomeHeader(),
-            SizedBox(height: getProportionateScreenWidth(10)),
-             NearbyHospitalsHome(),
-            SizedBox(height: getProportionateScreenWidth(30)),
-            DoctorsHome(),
-            SizedBox(height: getProportionateScreenWidth(30)),
-            HospitalsHome(),
-            SizedBox(height: getProportionateScreenWidth(30)),
+              
+           SizedBox(height: getProportionateScreenWidth(10)),
+                       
+                     sectionTitle(text: 'Doctors', view: () {}),
+                     DoctorsHome(),
+                     SizedBox(height: 30.0),
+                    
+                    sectionTitle(text: 'Hospitals', view: () {}),
+                    HospitalsHome(),
+                      SizedBox(height: 30.0),
+                   
+                       
+                     ],
+                   ),
+                 ),
+               );
+             }
+           
             
-          ],
-        ),
-      ),
-    );
-  }
 }

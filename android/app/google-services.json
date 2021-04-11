@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "791178445275",
+    "project_id": "doctoronhand-38e98",
+    "storage_bucket": "doctoronhand-38e98.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791178445275:android:bec62d5edc68a7aca067fe",
+        "android_client_info": {
+          "package_name": "com.sisam.DoctorOnHand"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "791178445275-ucpn06di8n8igvmcoae4dc59hgiosukg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5WUldCFc3UVtUthftXDrCf-vRzPrMBTo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "791178445275-ucpn06di8n8igvmcoae4dc59hgiosukg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

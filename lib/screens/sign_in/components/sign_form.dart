@@ -6,6 +6,7 @@ import 'package:DoctorOnHand/helper/keyboard.dart';
 import 'package:DoctorOnHand/screens/forgot_password/forgot_password_screen.dart';
 import 'package:DoctorOnHand/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,12 +14,32 @@ import '../../../components/default_button.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
+
 class SignForm extends StatefulWidget {
   @override
   _SignFormState createState() => _SignFormState();
 }
 
+
+
 class _SignFormState extends State<SignForm> {
+String onesignalUserId;
+  void oneSignal() async {
+    var status = await OneSignal.shared.getPermissionSubscriptionState();
+
+    // the user's ID with OneSignal
+    onesignalUserId = status.subscriptionStatus.userId;
+    print('this is onesignal user id');
+    print(onesignalUserId);
+  }
+
+     @override
+     void initState() {
+
+    // TODO: implement initState
+    super.initState();
+    oneSignal();
+  }
   final _formKey = GlobalKey<FormState>();
   String email;
   String password;
@@ -82,13 +103,15 @@ class _SignFormState extends State<SignForm> {
                 _formKey.currentState.save();
                 print(email);
                 print(password);
-                Map data = {
+                // print(onesignalUserId);
+               Map data = {
                   'email': email,
                   'password': password,
+                  //'onesignal': onesignalUserId
                 };
 
                 // if all are valid then go to success screen
-                KeyboardUtil.hideKeyboard(context);
+               KeyboardUtil.hideKeyboard(context);
 
                 var response = await Api().loginRegister(data, 'login');
 
@@ -109,7 +132,7 @@ class _SignFormState extends State<SignForm> {
                       barrierDismissible: false,
                       builder: (context) {
                         return AlertDialog(
-                          title: Text('You have entered incorrect passwordP \nlease try again.'),
+                          title: Text('You have entered incorrect \n username or password'),
                           content: Text(error.toString()),
                           actions: [
                             RaisedButton(

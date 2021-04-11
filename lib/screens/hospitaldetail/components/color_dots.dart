@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:DoctorOnHand/components/rounded_icon_btn.dart';
-import 'package:DoctorOnHand/models/hos.dart';
+import 'package:DoctorOnHand/constants.dart';
+import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
 import '../../../size_config.dart';
+
 
 class ColorDots extends StatelessWidget {
   const ColorDots({
@@ -11,24 +11,18 @@ class ColorDots extends StatelessWidget {
     @required this.hospital,
   }) : super(key: key);
 
-  final Hospital hospital;
+  final hospital;
 
   @override
   Widget build(BuildContext context) {
     // Now this is fixed and only for demo
-    int selectedColor = 3;
+  
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
       child: Row(
         children: [
-          // ...List.generate(
-          //   hospital.colors.length,
-          //   (index) => ColorDot(
-          //     color: hospital.colors[index],
-          //     isSelected: index == selectedColor,
-          //   ),
-          // ),
+        
           Spacer(),
           RoundedIconBtn(
             icon: Icons.remove,

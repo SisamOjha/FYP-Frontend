@@ -28,6 +28,10 @@ class HomeHeader extends StatelessWidget {
             numOfitem: 3,
             press: () {},
           ),
+          IconBtnWithCounter(
+            svgSrc: "assets/icons/Heart Icon.svg",
+            press: () {},
+          ),
         ],
       ),
     );

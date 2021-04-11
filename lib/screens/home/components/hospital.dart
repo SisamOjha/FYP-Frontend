@@ -1,25 +1,41 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:DoctorOnHand/api/api.dart';
-import 'package:DoctorOnHand/components/hospital_card.dart';
+import 'package:DoctorOnHand/screens/hospitaldetail/Hospitaletails_screen.dart';
 import 'package:flutter/material.dart';
-
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
 
-class HospitalsHome extends StatelessWidget {
-  //Get Hospitals data
+
+class HospitalsHome extends StatefulWidget {
+  static String routeName = "/hospitals";
+  //Get Products data
+  @override
+  _HospitalsHomeState createState() => _HospitalsHomeState();
+}
+
+class _HospitalsHomeState extends State<HospitalsHome> {
+  
   Future getHospitalsData() async {
+      // ignore: unused_local_variable
+      List<dynamic> hospitals = [];
+      try {
     var response = await Api().getData('hospitals');
-    var data = json.decode(response.body)['data'];
-    print(data);
-    return data;
+    var hospitals = json.decode(response.body)['data'];
+    print(hospitals);
+    return hospitals;
+  }
+  on SocketException {
+      return null;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+       child: Column(
       children: [
         FutureBuilder(
           future: getHospitalsData(),
@@ -30,82 +46,156 @@ class HospitalsHome extends StatelessWidget {
                   // Text(mydata['name']),
                   ...List.generate(snapshot.data.length, (index) {
                     var mydata = snapshot.data[index];
-                   
-                   return Card(
-                  elevation: 2.0,
-                  child: InkWell(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 25,
-                        ),
-                        Container(
-                          height: 200,
-                          width: MediaQuery.of(context).size.width / 2,
-                          padding: EdgeInsets.all(30),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9),
-                            image: DecorationImage(
-                              image:
-                                  NetworkImage(snapshot.data[index]['image']),
-                              fit: BoxFit.fill,
+                   return Padding(
+                        padding: const EdgeInsets.only(
+                            top: 25.0, left: 10.0, bottom: 10.0, right: 0.0),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HospitalDetailsScreen(
+                                       mydata: mydata, 
+                                      )),
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5.0)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color(0xFF656565).withOpacity(0.15),
+                                    blurRadius: 2.0,
+                                    spreadRadius: 1.0,
+                                  )
+                                ]),
+                            child: Wrap(
+                              children: <Widget>[
+                                Container(
+                                  width: 200.0,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Stack(
+                                        children: <Widget>[
+                                          Container(
+                                            height: 185.0,
+                                            width: 160.0,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(7.0),
+                                                    topRight:
+                                                        Radius.circular(7.0)),
+                                                image: DecorationImage(
+                                                    image: NetworkImage(
+                                                        mydata['image']),
+                                                    fit: BoxFit.cover)),
+                                          ),
+                                         
+                                             
+                                        ],
+                                      ),
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              top:
+                                                  // top: getProportionateScreenHeight(
+                                                  7.0)),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 15.0, right: 15.0),
+                                        child: Text(
+                                          mydata['name'],
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              letterSpacing: 0.6,
+                                              color: kPrimaryColor,
+                                              fontFamily: "Sans",
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16.0),
+                                        ),
+                                      ),
+                                      Padding(
+                                          padding: EdgeInsets.only(top: 1.0)),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 3.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15.0,
+                                                          right: 15.0),
+                                                  child: Text(
+                                                    'Address-' +
+                                                        mydata['city']
+                                                            .toString(),
+                                                    style: TextStyle(
+                                                        fontFamily: "Sans",
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 14.0),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15.0,
+                                                          right: 15.0,
+                                                          top: 5.0,
+                                                          bottom: 10),
+                                                ),
+                                              ],
+                                            ),
+                                          
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          snapshot.data[index]['name'],
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        
-                        SizedBox(
-                          height: 20,
-                        ),
-                        // OutlinedButton.icon(
-                        //   icon: Icon(
-                        //     Icons.shop_rounded,
-                        //     color: Colors.black,
-                        //   ),
-                        //   label: Text(
-                        //     "Buy Now",
-                        //     style: TextStyle(
-                        //       color: Colors.black,
-                        //     ),
-                        //   ),
-                        //   onPressed: () => print("it's pressed"),
-                        //   style: ElevatedButton.styleFrom(
-                        //     side: BorderSide(width: 2.0, color: Colors.black),
-                        //     shape: RoundedRectangleBorder(
-                        //       borderRadius: BorderRadius.circular(32.0),
-                        //     ),
-                        //   ),
-                        // )
-                      ],
-                    ),
-                    onTap: () {
-                     Navigator.push(
-                         context,
-                          MaterialPageRoute(
-                              builder: (context) => HospitalCard()));
-                    },
-                  ),
-                );
+                      );
+
+
+
+
                   }
-                      
+
+
 
                       ),
 
-                
+                  SizedBox(width: getProportionateScreenWidth(20)),
                 ],
               );
-             
+              // return Text(mydata.length.toString());
+              // return Text(snapshot.data[0]['discount'].toString());
+              // return ListView.builder(
+              //   physics: NeverScrollableScrollPhysics(),
+              //   shrinkWrap: true,
+              //   itemCount: snapshot.data.length,
+              //   itemBuilder: (context, index) {
+              //     var mydata = snapshot.data[index];
+              //     return Text(mydata['discount'].toString());
+              //   },
+              // );
             } else if (snapshot.hasError) {
               return Text('Cannot load at this time');
             } else {
@@ -116,6 +206,7 @@ class HospitalsHome extends StatelessWidget {
           },
         ),
       ],
+       ),
     );
   }
 }

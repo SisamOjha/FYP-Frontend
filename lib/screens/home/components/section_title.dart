@@ -1,37 +1,26 @@
 import 'package:flutter/material.dart';
 
-import '../../../size_config.dart';
+import '../../../constants.dart';
 
-class SectionTitle extends StatelessWidget {
-  const SectionTitle({
-    Key key,
-    @required this.title,
-    @required this.press,
-  }) : super(key: key);
 
-  final String title;
-  final GestureTapCallback press;
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
+Widget sectionTitle({String text, Function view}) {
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 20),
+    // padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+    child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          title,
+          text,
           style: TextStyle(
-            fontSize: getProportionateScreenWidth(18),
-            color: Colors.black,
-          ),
+              color: kPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
         ),
         GestureDetector(
-          onTap: press,
-          child: Text(
-            "See More",
-            style: TextStyle(color: Color(0xFFBBBBBB)),
-          ),
-        ),
+          onTap: view,
+          child: Text('See All '),
+        )
       ],
-    );
-  }
+    ),
+  );
 }

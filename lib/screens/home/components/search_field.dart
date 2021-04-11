@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:DoctorOnHand/models/searchModel.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
@@ -11,10 +11,11 @@ class SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       width: SizeConfig.screenWidth * 0.6,
       decoration: BoxDecoration(
-        color: kSecondaryColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(15),
+        color: kSecondaryColor.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: TextField(
         onChanged: (value) => print(value),
@@ -25,9 +26,17 @@ class SearchField extends StatelessWidget {
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,
+            // onPressed:(){
+              
+            // },
             hintText: "Search",
-            prefixIcon: Icon(Icons.search)),
+            prefixIcon: IconButton(
+              icon: Icon(Icons.search),
+             onPressed: () {
+                showSearch(context: context, delegate: SearchModel());}, )
+         
       ),
+    )
     );
   }
 }

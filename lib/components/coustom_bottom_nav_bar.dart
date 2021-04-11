@@ -1,3 +1,4 @@
+//import 'package:DoctorOnHand/screens/favourite/profile_screen.dart';
 import 'package:DoctorOnHand/screens/home/home_screen.dart';
 import 'package:DoctorOnHand/screens/specialist/specialist_screen.dart';
 import 'package:flutter/material.dart';
@@ -58,10 +59,11 @@ class CustomBottomNavBar extends StatelessWidget {
                 onPressed: () =>
                  Navigator.pushNamed(context, SpecialistScreen.routeName),
               ),
-              IconButton(
-                icon: SvgPicture.asset("assets/icons/Chat bubble Icon.svg"),
-                onPressed: () {},
-              ),
+              // IconButton(
+              //   icon: SvgPicture.asset("assets/icons/heart Icon.svg"),
+              //   onPressed: () =>
+              //       Navigator.pushNamed(context, FavouriteScreen.routeName),
+              // ),
               IconButton(
                 icon: SvgPicture.asset(
                   "assets/icons/User Icon.svg",

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:DoctorOnHand/api/api.dart';
 import 'package:DoctorOnHand/helper/keyboard.dart';
 import 'package:DoctorOnHand/screens/home/home_screen.dart';
@@ -8,9 +7,8 @@ import 'package:DoctorOnHand/components/custom_surfix_icon.dart';
 import 'package:DoctorOnHand/components/default_button.dart';
 import 'package:DoctorOnHand/components/form_error.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../constants.dart';
-import '../../../size_config.dart';
+
 
 
 class SignUpForm extends StatefulWidget {
@@ -20,12 +18,17 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
-  String email;
-  String password;
-    String error = '';
-  // ignore: non_constant_identifier_names
-  String conform_password;
+TextEditingController email = TextEditingController();
+TextEditingController name = TextEditingController();
+TextEditingController password = TextEditingController();
+TextEditingController conform_password = TextEditingController();
+  
+  // String password;
+  // String name;
+  String error = '';
   bool remember = false;
+  // String conform_password;
+ 
   final List<String> errors = [];
 
   void addError({String error}) {
@@ -48,13 +51,15 @@ class _SignUpFormState extends State<SignUpForm> {
       key: _formKey,
       child: Column(
         children: [
+          //  buildNameFormField(),
+          //   SizedBox(height: 30),
           buildEmailFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
+          SizedBox(height: 30),
           buildPasswordFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
+          SizedBox(height: 30),
           buildConformPassFormField(),
           FormError(errors: errors),
-          SizedBox(height: getProportionateScreenHeight(40)),
+          SizedBox(height: 30),
           DefaultButton(
             text: "Continue",
             press: () async {
@@ -64,14 +69,14 @@ class _SignUpFormState extends State<SignUpForm> {
                 print(password);
                 Map data = {
                   'email': email,
-                  'password': password,
-                  'conform_password': conform_password,
+                 'name': name,
+                 'password': password,
+                  
                 };
                 // if all are valid then go to success screen
                  KeyboardUtil.hideKeyboard(context);
 
                 var response = await Api().signupRegister(data, 'signup');
-
                 var result = json.decode(response.body);
                 print(result['code']);
                 print(result['message']);
@@ -114,26 +119,29 @@ class _SignUpFormState extends State<SignUpForm> {
 
   TextFormField buildConformPassFormField() {
     return TextFormField(
+      controller: conform_password,
       obscureText: true,
-      onSaved: (newValue) => conform_password = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        } else if (value.isNotEmpty && password == conform_password) {
-          removeError(error: kMatchPassError);
-        }
-        conform_password = value;
-      },
-      validator: (value) {
-        if (value.isEmpty) {
-          addError(error: kPassNullError);
-          return "";
-        } else if ((password != value)) {
-          addError(error: kMatchPassError);
-          return "";
-        }
-        return null;
-      },
+     // validator: (value) find=>,
+     // onSaved: (newValue) => conform_password = newValue,
+      // onChanged: (value) {
+      //   if (value.isNotEmpty) {
+      //     removeError(error: kPassNullError);
+      //   } else if (value.isNotEmpty && password == conform_password) {
+      //     removeError(error: kMatchPassError);
+      //   }
+       // conform_password = value;
+        //setState(() {});
+      // },
+      // validator: (value) {
+      //   if (value.isEmpty) {
+      //     addError(error: kPassNullError);
+      //     return "";
+      //   } else if ((password != value)) {
+      //     addError(error: kMatchPassError);
+      //     return "";
+      //   }
+      //   return null;
+      // },
       decoration: InputDecoration(
       
         hintText: "Re-enter your password",
@@ -145,6 +153,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
+      controller: ,
       obscureText: true,
       onSaved: (newValue) => password = newValue,
       onChanged: (value) {
@@ -154,6 +163,8 @@ class _SignUpFormState extends State<SignUpForm> {
           removeError(error: kShortPassError);
         }
         password = value;
+        setState(() {});
+        
       },
       validator: (value) {
         if (value.isEmpty) {
@@ -199,11 +210,39 @@ class _SignUpFormState extends State<SignUpForm> {
       },
       decoration: InputDecoration(
         hintText: "Enter your email",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
       ),
     );
   }
+
+  TextFormField buildNameFormField() {
+    return TextFormField(
+  
+      onSaved: (newValue) => name = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kNameNullError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value.isEmpty) {
+          addError(error: kNameNullError);
+          return "";
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+       
+        hintText: "Enter your Name",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
+      ),
+    );
+  }
+
 }
+
+
